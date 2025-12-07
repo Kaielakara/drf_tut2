@@ -1,6 +1,10 @@
-from django.shortcuts import render
+from django.forms import model_to_dict
 from django.http import HttpRequest, JsonResponse
+from django.shortcuts import render
+
 import json
+
+from .models import Product
 
 # Create your views here.
 def index(request):
@@ -17,4 +21,22 @@ def api_message(request, *args, **kwargs):
     
     data['headers'] = dict(request.headers)
     data['params'] = dict(request.GET)
+    return JsonResponse(data)
+
+def api_model(request, *args, **kwargs):
+    p_one = Product.objects.all().order_by('?').first()
+
+    data ={}
+
+    # this basically creates a dictionary using the values of the model fields (this is the manual way)
+    # if p_one:
+    #     data['title'] = p_one.title
+    #     data['description'] = p_one.description
+    #     data['price'] = p_one.price
+
+    # or you could use a library
+
+    data = model_to_dict(p_one, fields=['id', 'title', 'price'])
+
+    
     return JsonResponse(data)
