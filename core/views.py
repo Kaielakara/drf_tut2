@@ -1,10 +1,13 @@
 from django.forms import model_to_dict
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 import json
 
 from .models import Product
+from .serializers import ProductSerializers
 
 # Create your views here.
 def index(request):
@@ -40,3 +43,14 @@ def api_model(request, *args, **kwargs):
 
     
     return JsonResponse(data)
+
+# this is using the djangorest framework
+@api_view(['GET', 'POST'])
+def drf_model(request, *args, **kwargs):
+    instance = Product.objects.all().order_by("?").first()
+    data = {}
+    
+    if instance:
+        data = ProductSerializers(instance).data
+
+    return Response(data)
