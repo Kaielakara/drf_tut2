@@ -47,10 +47,16 @@ def api_model(request, *args, **kwargs):
 # this is using the djangorest framework
 @api_view(['GET', 'POST'])
 def drf_model(request, *args, **kwargs):
-    instance = Product.objects.all().order_by("?").first()
-    data = {}
-    
-    if instance:
-        data = ProductSerializers(instance).data
+    if request.method == 'POST':
+        print(request.data)
+        return Response(request.data)
 
-    return Response(data)
+    else:
+        instance = Product.objects.all().order_by("?").first()
+        data = {}
+        
+        if instance:
+            data = ProductSerializers(instance).data
+
+        print(data)
+        return Response(data)
