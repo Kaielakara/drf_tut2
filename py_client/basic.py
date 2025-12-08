@@ -10,6 +10,6 @@ endpoint_three = 'http://localhost:8000/api/drf_intro'
 # get_response = requests.get(endpoint_three)
 
 # this is for the post request
-responses = requests.post(endpoint_three, json={"name" : 'gabe'})
+responses = requests.post(endpoint_three, json={"title": "shirt", "price" : '150.20'})
 
 print(responses.json())

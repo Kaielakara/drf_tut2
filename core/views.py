@@ -47,9 +47,15 @@ def api_model(request, *args, **kwargs):
 # this is using the djangorest framework
 @api_view(['GET', 'POST'])
 def drf_model(request, *args, **kwargs):
+
+    # This is for 
     if request.method == 'POST':
-        print(request.data)
-        return Response(request.data)
+        
+        # for this next line avoid using positional arguements but rather keyword arguements
+        serializer = ProductSerializers(data=request.data) 
+        if serializer.is_valid(raise_exception=True): #This will show us the error
+            serializer.save() # this will help save the new instance into the database
+            return Response(serializer.data)
 
     else:
         instance = Product.objects.all().order_by("?").first()
@@ -58,5 +64,4 @@ def drf_model(request, *args, **kwargs):
         if instance:
             data = ProductSerializers(instance).data
 
-        print(data)
         return Response(data)
