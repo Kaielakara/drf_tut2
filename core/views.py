@@ -3,6 +3,7 @@ from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import generics
 
 import json
 
@@ -65,3 +66,9 @@ def drf_model(request, *args, **kwargs):
             data = ProductSerializers(instance).data
 
         return Response(data)
+
+
+
+class ProductDetailView(generics.RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializers
