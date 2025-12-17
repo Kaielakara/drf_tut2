@@ -23,3 +23,6 @@ class Item(models.Model):
         choices=ITEM_CATEGORY_CHOICES,
         default='GN',
     )
+
+    def __str__(self):
+        return self.name

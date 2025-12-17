@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.response import Response
-from rest_framework import generics,status
+from rest_framework import authentication, generics, permissions, status
 
 from .models import Item
 from .serializers import ItemSerializer
@@ -8,6 +8,8 @@ from .serializers import ItemSerializer
 class ItemListApiView(generics.ListCreateAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+    authentication_classes = [authentication.SessionAuthentication]
+    permission_classes = [permissions.DjangoModelPermissions]
 
     def create(self,request, *args, **kwargs):
         is_many = isinstance(request.data, list)
@@ -23,12 +25,15 @@ class ItemListApiView(generics.ListCreateAPIView):
 class ItemRetrieveView(generics.RetrieveAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+    permission_classes = [permissions.DjangoModelPermissions]
 
 class ItemUpdateView(generics.UpdateAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+    permission_classes = [permissions.DjangoModelPermissions]
 
 class ItemDeleteView(generics.DestroyAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+    permission_classes = [permissions.IsAdminUser]
 
