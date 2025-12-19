@@ -8,7 +8,7 @@ from .serializers import ItemSerializer
 class ItemListApiView(generics.ListCreateAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
-    authentication_classes = [authentication.SessionAuthentication]
+    authentication_classes = [authentication.BasicAuthentication, authentication.SessionAuthentication]
     permission_classes = [permissions.DjangoModelPermissions]
 
     def create(self,request, *args, **kwargs):
