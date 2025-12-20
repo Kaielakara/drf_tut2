@@ -60,13 +60,13 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',  # For API Clients (Postman, React, Mobile)
+        'dropbox.authentication.TokenAuthentication',  # For API Clients (Postman, React, Mobile)
         'rest_framework.authentication.SessionAuthentication', # For the Browsable API
     ],
     # Optional: Make everything secure by default
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ]
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
 }
 
 ROOT_URLCONF = 'drf.urls'

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import authentication, generics, permissions
 from rest_framework.response import Response
 
-from .authentication import TokenAutentication
+from .authentication import TokenAuthentication
 from .models import SecureFile
 from .permissions import IsValidPerson
 from .serializers import SecureFileSerializers
@@ -11,14 +11,13 @@ from .serializers import SecureFileSerializers
 class ContentListView(generics.ListAPIView):
     queryset = SecureFile.objects.all()
     serializer_class = SecureFileSerializers
-    authentication_classes = [authentication.BasicAuthentication, authentication.SessionAuthentication, TokenAutentication]
-    permission_classes = [permissions.IsAuthenticated]
+
 
 
 class ContentCreateView(generics.CreateAPIView):
     queryset = SecureFile.objects.all()
     serializer_class = SecureFileSerializers
-    permission_classes = [permissions.IsAuthenticated]
+
 
     def create(self, request, *args, **kwargs):
 
@@ -35,6 +34,5 @@ class ContentCreateView(generics.CreateAPIView):
 class DetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = SecureFile.objects.all()
     serializer_class = SecureFileSerializers
-    authentication_classes = [TokenAutentication]
     permission_classes = [permissions.IsAuthenticated, IsValidPerson]
 

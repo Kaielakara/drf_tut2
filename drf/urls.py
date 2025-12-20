@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include("core.urls")),
     path('product/', include("product.urls")),
     path('dropbox/', include("dropbox.urls")),
+    path('v2/', include('drf.routers'))
 ]
